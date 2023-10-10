@@ -33,7 +33,7 @@ public class Address {
         this.houseNumber = houseNumber;
     }
 
-    public String getStreetName() {
+    public  String getStreetName() {
         return streetName;
     }
 
@@ -71,5 +71,12 @@ public class Address {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+
+    // Print Address Info
+    public void printAddressInfo(){
+        System.out.println("-- " + getStreetName() + " #" + getHouseNumber() + ", " + getCity() +
+                ", " + getProvince() + " " + getCountry() + " " + getProvince());
     }
 }

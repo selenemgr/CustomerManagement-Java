@@ -50,14 +50,17 @@ public class Main {
                 // Create and List new Customer with default Address
                 customerList.add(Customer.newCustomerDefaultAddress());
 
-                System.out.println("Customer Added Successfully");
+                System.out.println("\nCustomer Added Successfully!");
+                enterContinue();
                 break;
 
             case 2:
                 // Check for an empty list
                 checkEmptyList();
 
-                System.out.println("Enter Customer ID to add a new Address: ");
+                displayCustomerList();
+                System.out.println("\nEnter Customer ID to add a new Address: ");
+                System.out.print("\n/: ");
                 int customerId = scanner.nextInt();
                 scanner.nextLine();
 
@@ -69,15 +72,41 @@ public class Main {
                 break;
 
             case 3:
+                checkEmptyList();
+                // Select a customer from the list
+                Customer customer3 = selectCustomerFromList();
+
+                System.out.println("\nAre you sure you want to delete the information of this customer?");
+                System.out.println("-- Yes    -- No");
+                System.out.print("\n/: ");
+                String input = scanner.nextLine();
+
+                if (input.toLowerCase().equals("yes")){
+                    customerList.remove(customer3);
+                    System.out.println("\nCustomer Removed Successfully");
+                }
+                enterContinue();
                 break;
 
             case 4:
+                checkEmptyList();
+                Customer customer4 = selectCustomerFromList();
+                customer4.printCustomerInfo();
+                Main.enterContinue();
                 break;
 
             case 5:
-                break;
 
-            case 6:
+                for (Customer customers : customerList) {
+                    System.out.println("\n/////////////////////////////////////////");
+                    System.out.println("##########################################");
+                    System.out.println("//////////////////////////////////////////");
+                    customers.printCustomerInfo();
+                    System.out.println("\n//////////////////////////////////////////");
+                    System.out.println("###########################################");
+                    System.out.println("///////////////////////////////////////////");
+                }
+                enterContinue();
                 break;
 
             case 0:
@@ -102,8 +131,8 @@ public class Main {
     private static void checkEmptyList(){
         if (customerList.size() < 1){
             System.out.println("There are no existing customers.");
+            startMainMenu();
         }
-        startMainMenu();
     }
 
     // Check for existing customer by its id
@@ -147,7 +176,7 @@ public class Main {
         String[] inputParts = userInput.split(", ");
         int numberOfParts = inputParts.length;
 
-        Address newAddress = new Address();
+        Address newAddress = null;
 
         if (numberOfParts == 6){
             // Add attributes values of the inputs
@@ -160,6 +189,7 @@ public class Main {
 
             // Create new Address Object
             newAddress = new Address(houseNumber, streetName, city, province, country, postalCode);
+
         } else {
             System.out.println("\nInvalid Option, Try Again...");
             Main.enterContinue();
@@ -170,8 +200,33 @@ public class Main {
         for (int i=0; i<customerList.size(); i++){
             if(customerList.get(i).getId() == customer.getId()){
                 customerList.get(i).getAddressList().add(newAddress);
+                System.out.println("\nNew Address successfully added to Customer with ID: " + customer.getId());
+                enterContinue();
             }
         }
-        System.out.println("New Address successfully added to Customer with ID: " + customer.getId());
+
+    }
+
+    // Display List of Customers to select a customer by its ID
+    private static Customer selectCustomerFromList(){
+        displayCustomerList();
+        System.out.print("\n/: ");
+
+        int input = scanner.nextInt();
+        scanner.nextLine();
+
+        return customerById(input);
+    }
+
+    // Display List of Customer
+    private static void displayCustomerList(){
+        System.out.println("\n--------------------------------");
+        System.out.println("     Customer Selection           ");
+        System.out.println("--------------------------------\n");
+        System.out.println("Select Customer Id: \n");
+
+        for (Customer customer : customerList) {
+            System.out.println("- [" + customer.getId() + "] " + customer.getName());
+        }
     }
 }

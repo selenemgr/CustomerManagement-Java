@@ -78,6 +78,7 @@ public class Customer {
     }
 
     public List<Address> getAddressList() {
+        addressList = new ArrayList<Address>();
         return addressList;
     }
 
@@ -128,5 +129,31 @@ public class Customer {
         }
 
         return customer;
+    }
+
+    // Print Customer Info
+    public void printCustomerInfo() {
+        System.out.println("\n--------------------------------");
+        System.out.println("         Customer Info           ");
+        System.out.println("--------------------------------\n");
+
+        System.out.println("Id: " + getId());
+        System.out.println("Name: " + getName());
+        System.out.println("Contact Number: " + getContactNumber());
+        System.out.println("Email: " + getEmail());
+
+        if (addressList == null){
+            System.out.println("\nThere are no existing addresses.");
+            Main.enterContinue();
+            Main.startMainMenu();
+        } else {
+            System.out.println("\n--------------------------------");
+            System.out.println("         Customer Addresses           ");
+            System.out.println("--------------------------------\n");
+
+            for (Address address : addressList){
+                address.printAddressInfo();
+            }
+        }
     }
 }
